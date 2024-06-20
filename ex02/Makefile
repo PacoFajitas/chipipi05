@@ -6,7 +6,7 @@
 #    By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/11 02:44:06 by tfiguero          #+#    #+#              #
-#    Updated: 2024/06/20 06:24:38 by tfiguero         ###   ########.fr        #
+#    Updated: 2024/06/20 06:25:23 by tfiguero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,10 @@ NAME = Burocracy
 
 SRC_FILES = main.cpp\
 			Bureaucrat.cpp\
-			Form.cpp
-			
+			AForm.cpp\
+			ShrubberyCreationForm.cpp\
+			RobotomyRequestForm.cpp\
+			PresidentialPardonForm.cpp
 			
 OBJ_DIR = objs/
 OBJ_FILES = $(SRC_FILES:.cpp=.o)

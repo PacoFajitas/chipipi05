@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:04:36 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 03:18:24 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/06/20 05:12:40 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void Bureaucrat::increaseGrade()
 	
 }
 
-
 void Bureaucrat::decreaseGrade()
 {
 	if (_grade + 1 > 150)
@@ -109,8 +108,7 @@ void Bureaucrat::decreaseGrade()
 		throw GradeTooLowException();
 	}
 	this->_grade += 1;
-}
-
+} 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& param)
 {
 	os << param.getName() <<  ", bureaucrat grade " << param.getGrade();
