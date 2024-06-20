@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Form.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 18:04:38 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 02:07:39 by tfiguero         ###   ########.fr       */
+/*   Created: 2024/06/20 02:25:02 by tfiguero          #+#    #+#             */
+/*   Updated: 2024/06/20 02:52:12 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
-int	main()
+const char* Form::GradeTooHighException::what() const throw()
 {
-	Bureaucrat a;
-	try
-	{
-		std::cout << a.getGrade() << std::endl;
-		a.increaseGrade();
-		a.increaseGrade();
-	}
-	catch(Bureaucrat::GradeTooHighException& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	catch(Bureaucrat::GradeTooLowException& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	std::cout << a << std::endl;
+	return("Grade is already the highest couldnt increase it anymore");
+}
+
+
+const char* Form::GradeTooLowException::what() const  throw()
+{
+	return("Grade is already the lowest couldnt decrease it anymore");
 }

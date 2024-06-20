@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:05:53 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 03:16:01 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/06/20 02:56:51 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ class Bureaucrat
 			const char* what() const throw();
 		};
 		Bureaucrat();
+		Bureaucrat(const Bureaucrat& old);
 		Bureaucrat(const std::string name);
 		Bureaucrat(const std::string name, const int grade);
 		Bureaucrat(const int grade);
-		Bureaucrat(const Bureaucrat& old);
 		Bureaucrat& operator=(const Bureaucrat& old);
 		~Bureaucrat();
 		std::string getName() const;
