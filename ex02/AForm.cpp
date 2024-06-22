@@ -23,6 +23,10 @@ const char* AForm::GradeTooLowException::what() const  throw()
 	return("Grade is already the lowest couldnt decrease it anymore");
 }
 
+const char* AForm::NotSignedException::what() const  throw()
+{
+	return("This form hasn't been signed yet");
+}
 AForm::AForm(): _name("Default"), _grade_exec(15), _grade_sign(15), _signed(false)
 {
 	
@@ -65,29 +69,10 @@ AForm::AForm(const int gradeSign): _name("Default"), _grade_exec(15), _grade_sig
 		throw GradeTooHighException();
 	std::cout << "AForm constructor called witgh a grade to sign of "<< gradeSign << std::endl;
 }
-AForm::AForm(const std::string name, const int gradeExec): _name(name), _grade_exec(gradeExec), _grade_sign(15), _signed(false)
+
+AForm::AForm(const AForm& old) : _name(old._name), _grade_exec(old._grade_exec), _grade_sign(old._grade_sign), _signed(old._signed)
 {
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();
-	std::cout << "AForm constructor called with name "<< name<< " and a grade to execute of "<< gradeExec << std::endl;
-}
-AForm::AForm(const int gradeExec): _name("Default"), _grade_exec(gradeExec), _grade_sign(15), _signed(false)
-{
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();
-	std::cout << "AForm constructor called with a grade to execute of "<< gradeExec << std::endl;
-}
-AForm::AForm(const AForm& old): _grade_exec(old.getGradeExec()), _grade_sign(old.getGradeSign()), _signed(old.getSigned()), _name(old.getName())
-{
-	std::cout << "AForm copy constructor called"<< std::endl;
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();
+	std::cout << "AForm copy constructor called " << std::endl;
 }
 AForm& AForm::operator=(const AForm& old)
 {
@@ -123,6 +108,16 @@ void		AForm::beSigned(const Bureaucrat& param)
 		_signed = true;
 	}else
 		throw GradeTooLowException();
+}
+
+void AForm::execute(const Bureaucrat &executor)
+{
+	if(!_signed)
+		throw NotSignedException();
+	else if(this->_grade_exec < executor.getGrade())
+		throw GradeTooLowException();
+	else
+		this->acctuallyExecute();
 }
 
 std::ostream& operator<<(std::ostream& os, const AForm& param)

@@ -15,13 +15,15 @@
 
 #include <iostream>
 #include "Bureaucrat.hpp"
+
+class Bureaucrat;
 class AForm
 {
 	private:
 		const std::string 	_name;
-		bool 				_signed;
-		const int 			_grade_sign;
 		const int			_grade_exec;
+		const int 			_grade_sign;
+		bool 				_signed;
 	public:
 		class GradeTooHighException : public std::exception
 		{
@@ -33,14 +35,17 @@ class AForm
 			public:
 			const char* what() const throw();
 		};
+		class NotSignedException : public std::exception
+		{
+			public:
+			const char* what() const throw();
+		};
 		AForm();
 		AForm(const std::string name);
 		AForm(const std::string name, const int gradeSign);
 		AForm(const std::string name, const int gradeSign, const int gradeExec);
 		AForm(const int gradeSign, const int gradeExec);
 		AForm(const int gradeSign);
-		AForm(const std::string name, const int gradeExec);
-		AForm(const int gradeExec);
 		AForm(const AForm& old);
 		AForm& operator=(const AForm& old);
 		virtual ~AForm();
@@ -50,7 +55,9 @@ class AForm
 		int			getGradeExec() const;
 		virtual std::string 		getTarget() const = 0;
 		void		beSigned(const Bureaucrat& param);
-		virtual void		beExecuted() const = 0;
+		virtual void		acctuallyExecute() const = 0;
+		void execute(Bureaucrat const & executor);
 };
 std::ostream& operator<<(std::ostream& os, const AForm& param);
+
 #endif

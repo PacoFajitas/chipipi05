@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:05:53 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 05:13:35 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:49:28 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <iostream>
 #include <exception>
 #include "Form.hpp"
+
+class Form;
 class Bureaucrat
 {
 	private:

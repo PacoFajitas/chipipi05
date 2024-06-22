@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 02:25:02 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 05:10:07 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:53:43 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ const char* Form::GradeTooLowException::what() const  throw()
 	return("Grade is already the lowest couldnt decrease it anymore");
 }
 
-Form::Form(): _name("Default"), _grade_exec(15), _grade_sign(15), _signed(false)
+Form::Form(): _name("Default"), _grade_sign(15), _grade_exec(15), _signed(false)
 {
 	
 	std::cout << "Basic form constructor called" << std::endl;
 }
-Form::Form(const std::string name) :_name(name),  _grade_exec(15), _grade_sign(15), _signed(false)
+Form::Form(const std::string name) :_name(name), _grade_sign(15), _grade_exec(15), _signed(false)
 {
 	std::cout << "Form constructor called with name "<< name << std::endl;
 }
-Form::Form(const std::string name, const int gradeSign): _name(name), _grade_exec(15), _grade_sign(gradeSign), _signed(false)
+Form::Form(const std::string name, const int gradeSign): _name(name), _grade_sign(gradeSign), _grade_exec(15), _signed(false)
 {
 	if(_grade_exec > 150 || _grade_sign > 150)
 		throw GradeTooLowException();
@@ -40,7 +40,7 @@ Form::Form(const std::string name, const int gradeSign): _name(name), _grade_exe
 		throw GradeTooHighException();
 	std::cout << "Form constructor called with name "<< name<< " and a grade to sign of "<< gradeSign << std::endl;
 }
-Form::Form(const std::string name, const int gradeSign, const int gradeExec): _name(name), _grade_exec(gradeExec), _grade_sign(gradeSign), _signed(false)
+Form::Form(const std::string name, const int gradeSign, const int gradeExec): _name(name), _grade_sign(gradeSign), _grade_exec(gradeExec), _signed(false)
 {
 	if(_grade_exec > 150 || _grade_sign > 150)
 		throw GradeTooLowException();
@@ -49,39 +49,7 @@ Form::Form(const std::string name, const int gradeSign, const int gradeExec): _n
 	std::cout << "Form constructor called with name "<< name<< " and a grade to sign of "<< gradeSign;
 	std::cout << " and a grade to execute of " << gradeExec << std::endl;
 }
-Form::Form(const int gradeSign, const int gradeExec): _name("Default"), _grade_exec(gradeExec), _grade_sign(gradeSign), _signed(false)
-{
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();	
-	std::cout << "Form constructor called witgh a grade to sign of "<< gradeSign << " and a grade to execute of " << gradeExec << std::endl;
-}
-Form::Form(const int gradeSign): _name("Default"), _grade_exec(15), _grade_sign(gradeSign), _signed(false)
-{
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();
-	std::cout << "Form constructor called witgh a grade to sign of "<< gradeSign << std::endl;
-}
-Form::Form(const std::string name, const int gradeExec): _name(name), _grade_exec(gradeExec), _grade_sign(15), _signed(false)
-{
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();
-	std::cout << "Form constructor called with name "<< name<< " and a grade to execute of "<< gradeExec << std::endl;
-}
-Form::Form(const int gradeExec): _name("Default"), _grade_exec(gradeExec), _grade_sign(15), _signed(false)
-{
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();
-	std::cout << "Form constructor called with a grade to execute of "<< gradeExec << std::endl;
-}
-Form::Form(const Form& old): _grade_exec(old.getGradeExec()), _grade_sign(old.getGradeSign()), _signed(old.getSigned()), _name(old.getName())
+Form::Form(const Form& old): _name(old.getName()), _grade_sign(old.getGradeSign()),  _grade_exec(old.getGradeExec()), _signed(old.getSigned())
 {
 	std::cout << "Form copy constructor called"<< std::endl;
 	if(_grade_exec > 150 || _grade_sign > 150)
