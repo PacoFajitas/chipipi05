@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 02:25:02 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 10:53:43 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:21:10 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,20 @@ Form::Form(const std::string name) :_name(name), _grade_sign(15), _grade_exec(15
 }
 Form::Form(const std::string name, const int gradeSign): _name(name), _grade_sign(gradeSign), _grade_exec(15), _signed(false)
 {
-	if(_grade_exec > 150 || _grade_sign > 150)
-		throw GradeTooLowException();
-	if(_grade_exec < 1 || _grade_sign < 1)
-		throw GradeTooHighException();
-	std::cout << "Form constructor called with name "<< name<< " and a grade to sign of "<< gradeSign << std::endl;
+	try
+	{
+		if(_grade_exec > 150 || _grade_sign > 150)
+			throw GradeTooLowException();
+		if(_grade_exec < 1 || _grade_sign < 1)
+			throw GradeTooHighException();
+		std::cout << "Form constructor called with name "<< name<< " and a grade to sign of "<< gradeSign << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
+	
 }
 Form::Form(const std::string name, const int gradeSign, const int gradeExec): _name(name), _grade_sign(gradeSign), _grade_exec(gradeExec), _signed(false)
 {
@@ -86,11 +95,21 @@ int			Form::getGradeExec() const
 
 void		Form::beSigned(const Bureaucrat& param)
 {
-	if(param.getGrade()<= this->_grade_sign)
+	try
 	{
-		_signed = true;
-	}else
-		throw GradeTooLowException();
+		if(param.getGrade()<= this->_grade_sign)
+		{
+			_signed = true;
+		}
+		else
+			throw GradeTooLowException();
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
+	
 }
 
 std::ostream& operator<<(std::ostream& os, const Form& param)

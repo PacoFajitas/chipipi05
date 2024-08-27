@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:04:36 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 05:15:52 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:37:29 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ Bureaucrat::Bureaucrat()
 }
 Bureaucrat::Bureaucrat(const int grade)
 {
-	if (grade < 151 && grade > 0)
+		std::cout << "Bureaucrat constructor called with grade"<< grade << std::endl;
+	if (grade < 151 && grade >= 0)
 	{
 		_name = "John Doe";
 		std::cout << "Bureaucrat constructor called with grade"<< grade << std::endl;
@@ -72,9 +73,9 @@ Bureaucrat::Bureaucrat(const Bureaucrat& old)
 }
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& old)
 {
+	std::cout <<  "Bureaucrat equal operator overload called" << std::endl;
 	this->_name = old._name;
 	this->_grade = old._grade;
-	std::cout <<  "Bureaucrat equal operator overload called" << std::endl;
 	return *this;
 }
 Bureaucrat::~Bureaucrat()
