@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 02:25:02 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/08/27 21:21:10 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/08/28 19:15:33 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 const char* Form::GradeTooHighException::what() const throw()
 {
-	return("Grade is already the highest couldnt increase it anymore");
+	return("Form's grade is too high for this bureaucrat");
 }
 
+const char* Form::FormSignedException::what() const throw()
+{
+	return("Form is already signed");
+}
 
 const char* Form::GradeTooLowException::what() const  throw()
 {
-	return("Grade is already the lowest couldnt decrease it anymore");
+	return("Form's grade is too low for this bureaucrat");
 }
 
 Form::Form(): _name("Default"), _grade_sign(15), _grade_exec(15), _signed(false)
@@ -97,12 +101,14 @@ void		Form::beSigned(const Bureaucrat& param)
 {
 	try
 	{
+		if (this->_signed == true)
+			throw FormSignedException();		
 		if(param.getGrade()<= this->_grade_sign)
 		{
 			_signed = true;
 		}
 		else
-			throw GradeTooLowException();
+			throw GradeTooHighException();
 	}
 	catch(const std::exception& e)
 	{
@@ -114,10 +120,10 @@ void		Form::beSigned(const Bureaucrat& param)
 
 std::ostream& operator<<(std::ostream& os, const Form& param)
 {
-	os << "The form's name is : " << param.getName() << "and has a execution and signing grade of: " << param.getGradeExec() << ", "<< param.getGradeSign();
+	os << "The form's name is : " << param.getName() << " and has a execution and signing grade of: " << param.getGradeExec() << ", "<< param.getGradeSign();
 	if(param.getSigned())
-		os << "and it has been signed" << std::endl;
+		os << " and it has been signed" << std::endl;
 	else
-		os << "and it hasn't been signed" << std::endl;
+		os << " and it hasn't been signed" << std::endl;
 	return(os);
 }

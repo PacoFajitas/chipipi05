@@ -4,11 +4,10 @@
 Bureaucrat test_bureaucrat_ctor(std::string name, int grade)
 {
     Bureaucrat a;
-	a = NULL;
     try
     {
-        Bureaucrat b(name, grade);
-        return (b);
+        Bureaucrat a(name, grade);
+        return (a);
     }
     catch(const Bureaucrat::GradeTooHighException& e)
     {

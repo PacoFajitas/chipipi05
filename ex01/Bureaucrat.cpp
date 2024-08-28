@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:04:36 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/08/27 21:37:29 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/08/28 19:34:47 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ Bureaucrat::Bureaucrat()
 }
 Bureaucrat::Bureaucrat(const int grade)
 {
-		std::cout << "Bureaucrat constructor called with grade"<< grade << std::endl;
-	if (grade < 151 && grade >= 0)
+	if (grade < 151 && grade > 0)
 	{
 		_name = "John Doe";
 		std::cout << "Bureaucrat constructor called with grade"<< grade << std::endl;
@@ -54,17 +53,38 @@ Bureaucrat::Bureaucrat(const std::string name)
 }
 Bureaucrat::Bureaucrat(const std::string name, const int grade)
 {
-	if (grade < 151 && grade > 0)
+	_name = name;
+	try
 	{
-		_name = name;
-		std::cout << "Bureaucrat constructor called with name "<< name <<" and with grade"<< grade <<std::endl;
-		_grade = grade;
+		if (grade < 151 && grade > 0)
+		{
+			std::cout << "Bureaucrat constructor called with name "<< name <<" and with grade "<< grade <<std::endl;
+			_grade = grade;
+		}
+		else if(grade > 150)
+		{
+			_grade = 150;
+			throw GradeTooLowException();
+		}
+		else
+		{
+			_grade = 1;
+			throw GradeTooHighException();
+		}
 	}
-	else if(grade > 150)
-		throw GradeTooLowException();
-	else
-		throw GradeTooHighException();
+	catch(const Bureaucrat::GradeTooLowException& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::cerr << "Grade set to 150" << std::endl;
+	}
+	catch(const Bureaucrat::GradeTooHighException& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::cerr << "Grade set to 1" << std::endl;
+	}
+	
 }
+
 Bureaucrat::Bureaucrat(const Bureaucrat& old)
 {
 	*this = old;
@@ -73,9 +93,9 @@ Bureaucrat::Bureaucrat(const Bureaucrat& old)
 }
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& old)
 {
-	std::cout <<  "Bureaucrat equal operator overload called" << std::endl;
 	this->_name = old._name;
 	this->_grade = old._grade;
+	std::cout <<  "Bureaucrat equal operator overload called" << std::endl;
 	return *this;
 }
 Bureaucrat::~Bureaucrat()
@@ -108,7 +128,13 @@ void Bureaucrat::decreaseGrade()
 		throw GradeTooLowException();
 	}
 	this->_grade += 1;
+} 
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& param)
+{
+	os << param.getName() <<  ", bureaucrat grade " << param.getGrade();
+	return(os);
 }
+
 void Bureaucrat::signForm(Form& param)
 {
 	try
@@ -125,10 +151,4 @@ void Bureaucrat::signForm(Form& param)
 		std::cerr << _name << " couldn't sign a form " << param.getName() << " because " << e.what() << std::endl;
 	}
 	
-}
-
-std::ostream& operator<<(std::ostream& os, const Bureaucrat& param)
-{
-	os << param.getName() <<  ", bureaucrat grade " << param.getGrade();
-	return(os);
 }

@@ -1,33 +1,44 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 18:04:38 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 02:07:39 by tfiguero         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Bureaucrat.hpp"
 
-int	main()
+int main(void)
 {
-	Bureaucrat a;
-	try
-	{
-		std::cout << a.getGrade() << std::endl;
-		a.increaseGrade();
-		a.increaseGrade();
-	}
-	catch(Bureaucrat::GradeTooHighException& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	catch(Bureaucrat::GradeTooLowException& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	std::cout << a << std::endl;
+    std::cout << "------- DEFAULT CONSTRUCTOR -------" << std::endl;
+    Bureaucrat test;
+    std::cout << test << std::endl << std::endl;
+
+
+    std::cout << std::endl << "------- NAME+GRADE CONSTRUCTOR -------" << std::endl;
+    Bureaucrat bob("bob", 1);
+    std::cout << bob << std::endl << std::endl;
+
+    
+    std::cout << std::endl << "------- EXCEPTION CATCH IN CONSTRUCTOR -------" << std::endl;
+    Bureaucrat di("di", 333);
+    std::cout << di << std::endl << std::endl;
+    
+
+    std::cout << std::endl << "------- DECREMENT MEMBER FUNCTION -------" << std::endl;
+    try
+    {
+        di.decreaseGrade();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    std::cout << di << std::endl << std::endl;
+
+
+    std::cout << std::endl << "------- INCREMENT MEMBER FUNCTION -------" << std::endl;
+    try
+    {
+        bob.increaseGrade();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    std::cout << bob << std::endl << std::endl;
+
+    return (0);
 }

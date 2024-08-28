@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 02:25:14 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 10:53:21 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/08/28 19:05:51 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ class Form
 			const char* what() const throw();
 		};
 		class GradeTooLowException : public std::exception
+		{
+			public:
+			const char* what() const throw();
+		};
+		class FormSignedException : public std::exception
 		{
 			public:
 			const char* what() const throw();

@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:04:36 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/06/20 05:12:40 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/08/28 19:31:42 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,36 @@ Bureaucrat::Bureaucrat(const std::string name)
 }
 Bureaucrat::Bureaucrat(const std::string name, const int grade)
 {
-	if (grade < 151 && grade > 0)
+	_name = name;
+	try
 	{
-		_name = name;
-		std::cout << "Bureaucrat constructor called with name "<< name <<" and with grade"<< grade <<std::endl;
-		_grade = grade;
+		if (grade < 151 && grade > 0)
+		{
+			std::cout << "Bureaucrat constructor called with name "<< name <<" and with grade "<< grade <<std::endl;
+			_grade = grade;
+		}
+		else if(grade > 150)
+		{
+			_grade = 150;
+			throw GradeTooLowException();
+		}
+		else
+		{
+			_grade = 1;
+			throw GradeTooHighException();
+		}
 	}
-	else if(grade > 150)
-		throw GradeTooLowException();
-	else
-		throw GradeTooHighException();
+	catch(const Bureaucrat::GradeTooLowException& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::cerr << "Grade set to 150" << std::endl;
+	}
+	catch(const Bureaucrat::GradeTooHighException& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::cerr << "Grade set to 1" << std::endl;
+	}
+	
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& old)
