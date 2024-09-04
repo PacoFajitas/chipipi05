@@ -84,8 +84,6 @@ int main(void)
 {
 	Bureaucrat b;
 
-    std::cout << b << std::endl;
-	b = NULL;
     std::cout << "------- CREATING TWO BUREAUCRATS -------" << std::endl;
     Bureaucrat b1 = test_bureaucrat_ctor("first", 7);
     std::cout << b1 << std::endl;

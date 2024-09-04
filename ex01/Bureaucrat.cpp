@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:04:36 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/08/28 19:34:47 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/09/03 22:17:23 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,37 @@ Bureaucrat::Bureaucrat()
 }
 Bureaucrat::Bureaucrat(const int grade)
 {
-	if (grade < 151 && grade > 0)
+	_name = "Jane Doe";
+	try
 	{
-		_name = "John Doe";
-		std::cout << "Bureaucrat constructor called with grade"<< grade << std::endl;
-		_grade = grade;
+		if (grade < 151 && grade > 0)
+		{
+			std::cout << "Bureaucrat constructor called name is "<< _name <<" and with grade "<< grade <<std::endl;
+			_grade = grade;
+		}
+		else if(grade > 150)
+		{
+			_grade = 150;
+			throw GradeTooLowException();
+		}
+		else
+		{
+			_grade = 1;
+			throw GradeTooHighException();
+		}
 	}
-	else if(grade > 150)
-		throw GradeTooLowException();
-	else
-		throw GradeTooHighException();
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::cout << "Bureaucrat constructor called name is "<< _name <<" and grade was invalid so it's now set to "<< _grade <<std::endl;
+	}
 	
 }
 Bureaucrat::Bureaucrat(const std::string name)
 {
 	_name = name;
-	std::cout << "Bureaucrat constructor called with name "<< name <<std::endl;
 	_grade = 5;
+	std::cout << "Bureaucrat constructor called with name "<< name << " and grade is set to" << _grade <<std::endl;
 }
 Bureaucrat::Bureaucrat(const std::string name, const int grade)
 {
@@ -72,15 +86,10 @@ Bureaucrat::Bureaucrat(const std::string name, const int grade)
 			throw GradeTooHighException();
 		}
 	}
-	catch(const Bureaucrat::GradeTooLowException& e)
+	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
-		std::cerr << "Grade set to 150" << std::endl;
-	}
-	catch(const Bureaucrat::GradeTooHighException& e)
-	{
-		std::cerr << e.what() << '\n';
-		std::cerr << "Grade set to 1" << std::endl;
+		std::cout << "Bureaucrat constructor called with name "<< _name <<" and grade was invalid so it's now set to "<< _grade <<std::endl;
 	}
 	
 }
@@ -127,8 +136,10 @@ void Bureaucrat::decreaseGrade()
 	{
 		throw GradeTooLowException();
 	}
-	this->_grade += 1;
+	this->_grade += 1;	
+	
 } 
+
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& param)
 {
 	os << param.getName() <<  ", bureaucrat grade " << param.getGrade();
@@ -140,15 +151,10 @@ void Bureaucrat::signForm(Form& param)
 	try
 	{
 		param.beSigned(*this);
-		std::cout << _name << " signed a form " << param.getName() << std::endl;
+		std::cout << _name << " signed form " << param.getName() << std::endl;
 	}
-	catch(Form::GradeTooHighException &e)
+	catch(std::exception &e)
 	{
-		std::cerr << _name << " couldn't sign a form " << param.getName() << " because " << e.what() << std::endl;
+		std::cerr << _name << " couldn't sign form " << param.getName() << " because " << e.what() << std::endl;
 	}
-	catch(Form::GradeTooLowException &e)
-	{
-		std::cerr << _name << " couldn't sign a form " << param.getName() << " because " << e.what() << std::endl;
-	}
-	
 }

@@ -6,7 +6,7 @@
 /*   By: tfiguero < tfiguero@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 02:25:02 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/08/28 19:15:33 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/09/03 22:00:52 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,14 @@ int			Form::getGradeExec() const
 
 void		Form::beSigned(const Bureaucrat& param)
 {
-	try
+	if (this->_signed == true)
+		throw FormSignedException();		
+	if(param.getGrade()<= this->_grade_sign)
 	{
-		if (this->_signed == true)
-			throw FormSignedException();		
-		if(param.getGrade()<= this->_grade_sign)
-		{
-			_signed = true;
-		}
-		else
-			throw GradeTooHighException();
+		_signed = true;
 	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	
-	
+	else
+		throw GradeTooHighException();	
 }
 
 std::ostream& operator<<(std::ostream& os, const Form& param)
